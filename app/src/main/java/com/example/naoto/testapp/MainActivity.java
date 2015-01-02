@@ -1,9 +1,14 @@
 package com.example.naoto.testapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+
+import com.example.naoto.testapp.utils.LogUtil;
 
 
 public class MainActivity extends Activity {
@@ -12,6 +17,21 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupViews();
+    }
+
+    void setupViews(){
+        Button mainButton = (Button)findViewById(R.id.main_button);
+        mainButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                LogUtil.d();
+                Intent intent = RssReaderActivity.getIntent(MainActivity.this);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                MainActivity.this.startActivity(intent);
+            }
+        });
     }
 
 
