@@ -3,7 +3,9 @@ package com.example.naoto.testapp;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import com.example.naoto.testapp.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,13 +129,14 @@ public class RssReaderFragment extends Fragment implements AbsListView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
-
+        LogUtil.d();
+        Item item = mAdapter.getItem(position);
+        Intent intent = ItemDetailActivity.getLaunchIntent(getActivity(),item);
+        getActivity().startActivity(intent);
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            //mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+            mListener.onFragmentInteraction(String.valueOf(position));
         }
     }
 
@@ -195,10 +200,12 @@ public class RssReaderFragment extends Fragment implements AbsListView.OnItemCli
 
 
             TextView titleTextView = (TextView)convertView.findViewById(R.id.rss_title);
-            titleTextView.setText(item.getTitle());
+            CharSequence title = Html.fromHtml((String)item.getTitle());
+            titleTextView.setText(title);
 
             TextView descriptionTextView = (TextView)convertView.findViewById(R.id.rss_description);
-            descriptionTextView.setText(item.getDescription());
+            CharSequence description = Html.fromHtml((String)item.getDescription());
+            descriptionTextView.setText(description);
 
             return convertView;
         }

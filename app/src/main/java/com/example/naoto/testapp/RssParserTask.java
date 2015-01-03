@@ -97,6 +97,8 @@ public class RssParserTask extends AsyncTask<String, Integer, ArrayAdapter> {
                                 currentItem.setTitle(parser.nextText());
                             } else if (tag.equals("description")) {
                                 currentItem.setDescription(parser.nextText());
+                            } else if (tag.equals("enclosure")){
+                                currentItem.setEnclosure(parser.nextText());
                             }
                         }
                         break;
